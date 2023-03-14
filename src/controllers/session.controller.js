@@ -18,12 +18,20 @@ export function isAuthenticated(req, res, next) {
 export async function registerAdmin(req, res) {
   req.body.admin_id = crypto.randomUUID();
   try {
-    req.body.password = hashing(req.body.password);
-    await adminModel.create(req.body);
-    console.log('new admin created');
-    res.status(201).json({
-      message: 'Success register admin',
-    });
+    const admin = await findAdminByUsername(req.body.username);
+    if (admin) {
+      console.error('Username is already exist!');
+      res.status(422).json({
+        message: 'Username is already exist!'
+      })
+    } else {
+      req.body.password = hashing(req.body.password);
+      await adminModel.create(req.body);
+      console.log('new admin created');
+      res.status(201).json({
+        message: 'Success register admin',
+      });
+    }
   } catch (error) {
     console.error(error);
     res.status(422).json({
