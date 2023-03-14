@@ -1,8 +1,8 @@
 import dotenv from 'dotenv';
+dotenv.config();
 import { adminModel } from '../models/admin.model.js';
 import { checkPassword, hashing } from '../utils/hashing.js';
 import { findAdminByUsername } from '../services/admin.service.js';
-dotenv.config();
 
 export function isAuthenticated(req, res, next) {
   if (req.session.admin) {
