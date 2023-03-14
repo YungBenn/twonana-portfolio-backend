@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import '../models/nft.model.js';
+import '../models/admin.model.js';
 
 export async function connect() {
   mongoose.set('strictQuery', false);
