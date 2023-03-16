@@ -3,12 +3,13 @@ dotenv.config();
 import { adminModel } from '../models/admin.model.js';
 import { checkPassword, hashing } from '../utils/hashing.js';
 import { findAdminByUsername } from '../services/admin.service.js';
+import { logger } from '../utils/logger.js';
 
 export function isAuthenticated(req, res, next) {
   if (req.session.admin) {
     next();
   } else {
-    console.error('Please login first!');
+    logger.error('Please login first!');
     res.status(401).json({
       message: 'Please login first!',
     });
@@ -20,20 +21,20 @@ export async function registerAdmin(req, res) {
   try {
     const admin = await findAdminByUsername(req.body.username);
     if (admin) {
-      console.error('Username is already exist!');
+      logger.error('Username is already exist!');
       res.status(422).json({
         message: 'Username is already exist!'
       })
     } else {
       req.body.password = hashing(req.body.password);
       await adminModel.create(req.body);
-      console.log('new admin created');
+      logger.info('new admin created');
       res.status(201).json({
         message: 'Success register admin',
       });
     }
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(422).json({
       message: 'Failed to register',
     });
@@ -45,21 +46,21 @@ export async function createSession(req, res) {
     const admin = await findAdminByUsername(req.body.username);
     const isValid = checkPassword(req.body.password, admin.password);
     if (!isValid) {
-      console.error('Invalid username or password');
+      logger.error('Invalid username or password');
       res.status(404).json({
         message: 'Invalid username or password',
       });
     } else {
       req.session.regenerate((err) => {
         if (err) {
-          console.error(err);
+          logger.error(err);
         }
         req.session.admin = req.body.username;
         req.session.save((err) => {
           if (err) {
-            console.error(err);
+            logger.error(err);
           }
-          console.log('Login success');
+          logger.info('Login success');
           res.json({
             message: 'login success',
           });
@@ -67,7 +68,7 @@ export async function createSession(req, res) {
       });
     }
   } catch (error) {
-    console.error('Invalid username or password');
+    logger.error('Invalid username or password');
     res.status(422).json({
       message: 'Invalid username or password',
     });
@@ -78,9 +79,9 @@ export async function logoutSession(req, res) {
   req.session.admin = null;
   req.session.save((err) => {
     if (err) {
-      console.error(err);
+      logger.error(err);
     }
-    console.log('Logout success');
+    logger.info('Logout success');
     res.json({
       message: 'logout success',
     });

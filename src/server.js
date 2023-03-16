@@ -7,6 +7,7 @@ import { NftRouter } from './routes/nft.route.js';
 import { connect } from './utils/connect.js';
 import { apiLimiter } from './middlewares/ratelimit.js';
 import { adminRouter } from './routes/admin.route.js';
+import { logger } from './utils/logger.js';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -39,6 +40,6 @@ app.use((req, res) => {
 });
 
 app.listen(port, async () => {
-  console.log(`server is running on http://localhost:${port}`);
+  logger.info(`server is running on http://localhost:${port}`);
   await connect();
 });
