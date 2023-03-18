@@ -8,7 +8,7 @@ const nftSchema = new Schema(
     description: { type: String, required: true },
     software: { type: String, required: true },
     size: { type: String, default: '6000px x 4000px' },
-    format_nft: { type: String, default: 'png' },
+    nft_format: { type: String, default: 'png' },
     marketplace_url: { type: String, required: true },
   },
   { timestamps: true },

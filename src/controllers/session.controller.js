@@ -1,5 +1,3 @@
-import dotenv from 'dotenv';
-dotenv.config();
 import { adminModel } from '../models/admin.model.js';
 import { checkPassword, hashing } from '../utils/hashing.js';
 import { findAdminByUsername } from '../services/admin.service.js';
@@ -23,8 +21,8 @@ export async function registerAdmin(req, res) {
     if (admin) {
       logger.error('Username is already exist!');
       res.status(422).json({
-        message: 'Username is already exist!'
-      })
+        message: 'Username is already exist!',
+      });
     } else {
       req.body.password = hashing(req.body.password);
       await adminModel.create(req.body);
