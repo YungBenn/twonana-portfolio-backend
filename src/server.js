@@ -39,6 +39,7 @@ app.use((req, res) => {
   });
 });
 
+// listen to server
 app.listen(port, async () => {
   logger.info(`server is running on http://localhost:${port}`);
   await connect();
