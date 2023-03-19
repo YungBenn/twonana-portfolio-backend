@@ -18,7 +18,7 @@ app.use(express.json());
 app.set('trust proxy', 1);
 app.use(
   session({
-    secret: process.env.SESSION_SECRET,
+    secret: process.env.SESSION_SECRET || 'SECRET',
     store: new MemoryStore({
       checkPeriod: 86400000,
     }),
