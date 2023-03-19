@@ -12,7 +12,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "pino": "^8.11.0",
+    "pino-pretty": "^10.0.0"
   },
   "dependencies": {
     "bcrypt": "^5.1.0",
@@ -22,8 +24,6 @@
     "express-rate-limit": "^6.7.0",
     "express-session": "^1.17.3",
     "joi": "^17.8.3",
-    "mongoose": "^6.9.2",
-    "pino": "^8.11.0",
-    "pino-pretty": "^10.0.0"
+    "mongoose": "^6.9.2"
   }
 }
