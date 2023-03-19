@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 import '../models/nft.model.js';
 import '../models/admin.model.js';
-import { logger } from './logger.js';
 
 export async function connect() {
   mongoose.set('strictQuery', false);
@@ -10,8 +9,8 @@ export async function connect() {
 
   try {
     await mongoose.connect(db);
-    logger.info('DB Connected');
+    console.log('DB Connected');
   } catch (error) {
-    logger.error(error);
+    console.error(error);
   }
 }
