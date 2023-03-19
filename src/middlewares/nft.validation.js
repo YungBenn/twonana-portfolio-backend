@@ -6,9 +6,9 @@ export function addNFTValidation(payload) {
     image: Joi.string().required(),
     category: Joi.string().required(),
     description: Joi.string().required(),
-    software: Joi.string().required(),
-    size: Joi.string().required(),
-    format_nft: Joi.string().required(),
+    software: Joi.string(),
+    size: Joi.string(),
+    format_nft: Joi.string(),
     url: Joi.string().required(),
   });
   return schema.validate(payload);
