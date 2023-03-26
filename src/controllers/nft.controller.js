@@ -4,16 +4,22 @@ import {
   updateNFTValidation,
 } from '../middlewares/nft.validation.js';
 
-export function getNFT(req, res) {
+export async function getNFT(req, res) {
   const query = req.query;
+
   try {
-    nftModel.find(query).then((data) => {
+    const nft = await nftModel.find(query);
+    if (!nft) {
+      res.status(404).json({
+        message: "There's no NFT at all",
+      });
+    } else {
       console.log('Success to get nfts');
       res.status(200).json({
         status: 200,
-        data: data,
+        data: nft,
       });
-    });
+    }
   } catch (error) {
     console.error(error);
   }
