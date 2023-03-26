@@ -4,19 +4,19 @@ import {
   updateNFTValidation,
 } from '../middlewares/nft.validation.js';
 
-export async function getNFT(req, res) {
+export function getNFT(req, res) {
   const query = req.query;
-  nftModel.find(query, (err, data) => {
-    try {
+  try {
+    nftModel.find(query).then((data) => {
       console.log('Success to get nfts');
       res.status(200).json({
         status: 200,
         data: data,
       });
-    } catch (error) {
-      console.error(error);
-    }
-  });
+    });
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 export async function addNFT(req, res) {
