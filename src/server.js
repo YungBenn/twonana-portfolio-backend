@@ -8,6 +8,7 @@ import { NftRouter } from './routes/nft.route.js';
 import { connect } from './utils/connect.js';
 import { apiLimiter } from './middlewares/ratelimit.js';
 import { adminRouter } from './routes/admin.route.js';
+import errorHandle from './middlewares/404.js';
 
 const app = express();
 const MemoryStore = memory(session);
@@ -36,12 +37,7 @@ app.use('/api/nft', apiLimiter, NftRouter);
 app.use('/admin', adminRouter);
 
 // 404 handle
-app.use((req, res) => {
-  res.status(404).json({
-    status: 404,
-    message: "This page doesn't exist",
-  });
-});
+app.use(errorHandle);
 
 // listen to server
 app.listen(port, async () => {
