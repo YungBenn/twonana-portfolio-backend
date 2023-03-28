@@ -10,7 +10,7 @@ export async function getNFT(req, res) {
   try {
     const nft = await nftModel.find(query);
     if (!nft) {
-      res.status(404).json({
+      res.status(204).json({
         message: "There's no NFT at all",
       });
     } else {
