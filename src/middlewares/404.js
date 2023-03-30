@@ -4,4 +4,5 @@ function errorHandle(req, res) {
     message: "This page doesn't exist",
   });
 }
-export default errorHandle
+
+export default errorHandle;

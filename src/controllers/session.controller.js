@@ -73,7 +73,7 @@ export async function createSession(req, res) {
 }
 
 export async function logoutSession(req, res) {
-  req.session.admin = null;
+  req.session.admin = req.session.destroy;
   req.session.save((err) => {
     if (err) {
       console.error(err);
