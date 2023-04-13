@@ -10,8 +10,14 @@ const nftSchema = new Schema(
     size: { type: String },
     nft_format: { type: String, default: 'png' },
     marketplace_url: { type: String, required: true },
+    countdown_days: { type: Number },
   },
   { timestamps: true },
 );
+
+nftSchema.pre('save', function (next) {
+  this.countdown_days = this.countdown_days * 86400000;
+  next();
+});
 
 export const nftModel = model('Nft', nftSchema);

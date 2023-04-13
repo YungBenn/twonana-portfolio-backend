@@ -5,7 +5,6 @@ import {
 } from '../middlewares/nft.validation.js';
 
 export async function getAllNFT(req, res) {
-
   try {
     const nft = await nftModel.find();
     if (!nft) {
@@ -45,6 +44,30 @@ export async function getNFTByCategory(req, res) {
   }
 }
 
+// export async function addNFT(req, res) {
+//   // const { error, value } = addNFTValidation(req.body);
+
+//   // if (error) {
+//   //   console.error(error);
+//   //   res.status(422).json({
+//   //     status: 422,
+//   //     message: error,
+//   //   });
+//   // }
+//   try {
+//     req.body.countdown_days = req.body.countdown_days * 86400000; // times 1 day
+//     await nftModel.create(req.body);
+//     console.log('New nft added');
+//     res.status(201).json({
+//       message: 'Success to add new NFT',
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(422).json({
+//       message: 'Please complete all required fields!',
+//     });
+//   }
+// }
 export async function addNFT(req, res) {
   const { error, value } = addNFTValidation(req.body);
 
@@ -56,10 +79,11 @@ export async function addNFT(req, res) {
     });
   }
   try {
-    await nftModel.create(value);
+    const nft = await nftModel.create(value);
     console.log('New nft added');
     res.status(201).json({
       message: 'Success to add new NFT',
+      data: nft,
     });
   } catch (error) {
     console.error(error);
@@ -74,7 +98,9 @@ export async function getNFTByTitle(req, res) {
   const { title } = req.params;
 
   try {
-    const nft = await nftModel.find({ category: category, title: title }).exec();
+    const nft = await nftModel
+      .find({ category: category, title: title })
+      .exec();
     if (!nft) {
       console.error('Your nft id is wrong');
       res.status(200).json({

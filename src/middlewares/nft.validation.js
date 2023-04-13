@@ -10,6 +10,7 @@ export function addNFTValidation(payload) {
     size: Joi.string(),
     nft_format: Joi.string(),
     marketplace_url: Joi.string().required(),
+    countdown_days: Joi.number().allow('', null),
   });
   return schema.validate(payload);
 }
@@ -24,6 +25,7 @@ export function updateNFTValidation(payload) {
     size: Joi.string().allow('', null),
     nft_format: Joi.string().allow('', null),
     marketplace_url: Joi.string().allow('', null),
+    countdown_days: Joi.number().allow('', null),
   });
   return schema.validate(payload);
 }
