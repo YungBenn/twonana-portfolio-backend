@@ -4,11 +4,31 @@ import {
   updateNFTValidation,
 } from '../middlewares/nft.validation.js';
 
-export async function getNFT(req, res) {
-  const query = req.query;
+export async function getAllNFT(req, res) {
 
   try {
-    const nft = await nftModel.find(query);
+    const nft = await nftModel.find();
+    if (!nft) {
+      res.status(204).json({
+        message: "There's no NFT at all",
+      });
+    } else {
+      console.log('Success to get nfts');
+      res.status(200).json({
+        status: 200,
+        data: nft,
+      });
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function getNFTByCategory(req, res) {
+  const { category } = req.params;
+
+  try {
+    const nft = await nftModel.find({ category: category }).exec();
     if (!nft) {
       res.status(204).json({
         message: "There's no NFT at all",
@@ -49,11 +69,12 @@ export async function addNFT(req, res) {
   }
 }
 
-export async function getNFTById(req, res) {
-  const { id } = req.params;
+export async function getNFTByTitle(req, res) {
+  const { category } = req.params;
+  const { title } = req.params;
 
   try {
-    const nft = await nftModel.findOne({ _id: id });
+    const nft = await nftModel.find({ category: category, title: title }).exec();
     if (!nft) {
       console.error('Your nft id is wrong');
       res.status(200).json({
@@ -100,7 +121,7 @@ export async function deleteNFT(req, res) {
 export async function updateNFT(req, res) {
   const { id } = req.params;
   const { error, value } = updateNFTValidation(req.body);
-  
+
   if (error) {
     console.error(error);
     res.status(422).json({

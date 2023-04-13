@@ -25,9 +25,6 @@ app.use(
     }),
     resave: false,
     saveUninitialized: true,
-    cookie: {
-      maxAge: 12 * 60 * 60 * 1000, // 12 hours
-    },
   }),
 );
 app.use(cors());

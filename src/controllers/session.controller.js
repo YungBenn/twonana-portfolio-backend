@@ -14,7 +14,6 @@ export function isAuthenticated(req, res, next) {
 }
 
 export async function registerAdmin(req, res) {
-  req.body.admin_id = crypto.randomUUID();
   try {
     const admin = await findAdminByUsername(req.body.username);
     if (admin) {
@@ -60,6 +59,7 @@ export async function createSession(req, res) {
           console.log('Login success');
           res.json({
             message: 'login success',
+            admin: admin,
           });
         });
       });
