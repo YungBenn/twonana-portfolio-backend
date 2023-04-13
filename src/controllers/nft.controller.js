@@ -26,8 +26,15 @@ export async function getNFT(req, res) {
 }
 
 export async function addNFT(req, res) {
-  const { value } = addNFTValidation(req.body);
+  const { error, value } = addNFTValidation(req.body);
 
+  if (error) {
+    console.error(error);
+    res.status(422).json({
+      status: 422,
+      message: error,
+    });
+  }
   try {
     await nftModel.create(value);
     console.log('New nft added');
@@ -57,7 +64,6 @@ export async function getNFTById(req, res) {
       console.log('Success to get a nft');
       res.status(200).json({
         status: 200,
-        message: 'nft updated!',
         data: nft,
       });
     }
@@ -93,8 +99,15 @@ export async function deleteNFT(req, res) {
 
 export async function updateNFT(req, res) {
   const { id } = req.params;
-  const { value } = updateNFTValidation(req.body);
-
+  const { error, value } = updateNFTValidation(req.body);
+  
+  if (error) {
+    console.error(error);
+    res.status(422).json({
+      status: 422,
+      message: error,
+    });
+  }
   try {
     await nftModel.findOneAndUpdate({ _id: id }, value);
     console.log('nft updated');

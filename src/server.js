@@ -4,11 +4,11 @@ import express from 'express';
 import cors from 'cors';
 import session from 'express-session';
 import memory from 'memorystore';
-import { NftRouter } from './routes/nft.route.js';
-import { connect } from './utils/connect.js';
-import { apiLimiter } from './middlewares/ratelimit.js';
-import { adminRouter } from './routes/admin.route.js';
 import errorHandle from './middlewares/404.js';
+import NftRouter from './routes/nft.route.js';
+import connect from './utils/connect.js';
+import apiLimiter from './middlewares/ratelimit.js';
+import adminRouter from './routes/admin.route.js';
 
 const app = express();
 const MemoryStore = memory(session);

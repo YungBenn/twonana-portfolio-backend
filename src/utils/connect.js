@@ -2,10 +2,9 @@ import mongoose from 'mongoose';
 import '../models/nft.model.js';
 import '../models/admin.model.js';
 
-export async function connect() {
+async function connect() {
   mongoose.set('strictQuery', false);
-  const db =
-    process.env.MONGO_URI;
+  const db = process.env.MONGO_URI;
 
   try {
     await mongoose.connect(db);
@@ -14,3 +13,5 @@ export async function connect() {
     console.error(error);
   }
 }
+
+export default connect;
