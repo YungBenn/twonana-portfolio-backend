@@ -165,3 +165,12 @@ export async function updateNFT(req, res) {
     console.error(error);
   }
 }
+
+export async function getCategories(req, res) {
+  try {
+    const category = await nftModel.find().distinct('category');
+    res.status(200).json(category);
+  } catch (error) {
+    console.error(error);
+  }
+}
