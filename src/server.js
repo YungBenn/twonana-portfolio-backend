@@ -18,26 +18,28 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.set('trust proxy', 1);
 app.use(
-  session({
-    secret: process.env.SESSION_SECRET || 'SECRET',
-    store: new MemoryStore({
-      checkPeriod: 86400000,
+    session({
+        secret: process.env.SESSION_SECRET || 'SECRET',
+        store: new MemoryStore({
+            checkPeriod: 86400000,
+        }),
+        resave: false,
+        saveUninitialized: true,
     }),
-    resave: false,
-    saveUninitialized: true,
-  }),
 );
 app.use(cors());
 
 // Route
 app.use('/api/nft', apiLimiter, NftRouter);
-app.use('/admin', adminRouter);
+app.use('api/admin', adminRouter);
 
 // 404 handle
 app.use(errorHandle);
 
 // listen to server
 app.listen(port, async () => {
-  console.log(`server is running on http://localhost:${port}`);
-  await connect();
+    console.log(`server is running on http://localhost:${port}`);
+    await connect();
 });
+
+export default app;
