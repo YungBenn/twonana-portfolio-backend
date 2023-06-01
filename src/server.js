@@ -31,7 +31,7 @@ app.use(cors());
 
 // Route
 app.use('/api/nft', apiLimiter, NftRouter);
-app.use('api/admin', adminRouter);
+app.use('/api/admin', adminRouter);
 
 // 404 handle
 app.use(errorHandle);
